@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -63,7 +64,7 @@
             position: relative;
         }
 
-        /* Header Üstü Arka Plan Görseli ve Blur / Maske Entegrasyonu */
+        /* Header arka plan görseli */
         .hero-bg-wrapper {
             position: absolute;
             top: 0;
@@ -75,28 +76,16 @@
             pointer-events: none;
         }
 
-        .hero-bg-wrapper::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(3,4,7,0.05) 0%,
-                rgba(3,4,7,0.15) 45%,
-                rgba(3,4,7,0.95) 100%
-            );
-            pointer-events: none;
-        }
-
         .hero-bg-image {
             display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center top;
-            opacity: 0.55;
-            filter: blur(1px) contrast(1.1);
-            visibility: visible;
+            opacity: 1;
+            filter: none;
+            -webkit-mask-image: none;
+            mask-image: none;
         }
 
         /* Background Graphics */
@@ -207,13 +196,10 @@
         }
 
         .brand-logo-img {
-            display: block;
             width: 82%;
             height: 82%;
             object-fit: contain;
             border-radius: 50%;
-            opacity: 1;
-            visibility: visible;
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -725,6 +711,13 @@
             color: var(--text-muted);
             letter-spacing: 0.8px;
         }
+    
+        /* Final image visibility safeguard */
+        .hero-bg-wrapper,
+        .hero-bg-wrapper img {
+            visibility: visible !important;
+        }
+
     </style>
 </head>
 <body>
@@ -733,7 +726,7 @@
 
     <!-- Header / Funnel Üst Alanı Arka Plan Görseli -->
     <div class="hero-bg-wrapper">
-        <img class="hero-bg-image" src="./images/headpaperimg.jpg" alt="Arka Plan Görseli">
+        <img class="hero-bg-image" src="images/headpaperimg.jpg" alt="Arka Plan Görseli">
     </div>
 
     <div class="container">
@@ -743,7 +736,7 @@
             <div class="logo-wrapper">
                 <div class="story-ring"></div>
                 <div class="brand-logo-container">
-                    <img class="brand-logo-img" src="./images/logoimg.jpg" alt="İspanyolca Cebimizde Logo">
+                    <img class="brand-logo-img" src="images/logoimg.jpg" alt="İspanyolca Cebimizde Logo">
                 </div>
                 <div class="badge-verified">✓</div>
             </div>
@@ -785,7 +778,7 @@
                 <!-- Card 1 -->
                 <div class="drive-card expandable" id="comicToggle" onclick="toggleSubmenu('comicToggle','comicSubmenu')">
                     <div class="drive-info">
-                        <div class="drive-icon">🎨</div>
+                        <div class="drive-icon">🦸🏻</div>
                         <div class="drive-text">
                             <h3>
                                 Haftalık Çizgi Roman
@@ -849,7 +842,7 @@
                 <!-- Card 3 -->
                 <a href="#" target="_blank" rel="noopener noreferrer" class="drive-card">
                     <div class="drive-info">
-                        <div class="drive-icon">🎴</div>
+                        <div class="drive-icon">🃏 </div>
                         <div class="drive-text">
                             <h3>
                                 İspanyolca 20 Kelime Kartı
@@ -947,3 +940,4 @@
 
 </body>
 </html>
+
