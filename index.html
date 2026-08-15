@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İspanyolca Cebimizde — Private Edition</title>
+    
+    <!-- SEO Meta Etiketleri -->
+    <meta name="description" content="Hızlı, basit ve eğlenceli İspanyolca kaynakları. E-kitaplar, çizgi romanlar ve kelime kartları cebinizde!">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Tipografi -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Pure Dark & Charcoal Palette */
+            --bg-dark: #030407;
+            --bg-smoke-1: #0A0C10;
+            --bg-smoke-2: #12151C;
+            
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --card-bg-hover: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.08);
+            
+            /* Gold / Koyu Altın Sarısı Palette */
+            --gold-primary: #C5A028;
+            --gold-light: #DFB738;
+            --gold-dark: #9A7B1C;
+            --gold-glow: rgba(197, 160, 40, 0.2);
+            --gold-gradient: linear-gradient(135deg, #DFB738 0%, #C5A028 50%, #9A7B1C 100%);
+            
+            /* Koyu İspanyol Kırmızısı Palette */
+            --brand-red: #B30710;
+            --brand-red-dark: #590306;
+            --brand-red-glow: rgba(179, 7, 16, 0.3);
+            
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Header Üstü Arka Plan Görseli ve Blur / Maske Entegrasyonu */
+        .hero-bg-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 480px;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+        }
+
+        .hero-bg-image {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            opacity: 0.35;
+            filter: blur(1px) contrast(1.1);
+            visibility: visible;
+        }
+
+        /* Background Graphics */
+        .mesh-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(circle at 50% 10%, var(--bg-smoke-2) 0%, transparent 60%),
+                radial-gradient(circle at 50% 100%, var(--bg-dark) 0%, #000000 100%);
+            opacity: 0.9;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 36px 36px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* Container Layout */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 24px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Entrance Animations */
+        .animate-fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.25s; }
+        .delay-3 { animation-delay: 0.4s; }
+        .delay-4 { animation-delay: 0.55s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Profile & Brand Section */
+        .profile-section {
+            text-align: center;
+            padding: 16px 0 44px;
+        }
+
+        .logo-wrapper {
+            position: relative;
+            width: 124px;
+            height: 124px;
+            margin: 0 auto 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .story-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #C5A028 0deg,
+                #B30710 90deg,
+                #DFB738 180deg,
+                #590306 270deg,
+                #C5A028 360deg
+            );
+            padding: 2px;
+            animation: rotateRing 15s linear infinite;
+            box-shadow: 0 0 20px rgba(179, 7, 16, 0.25), 0 0 10px rgba(197, 160, 40, 0.2);
+        }
+
+        @keyframes rotateRing {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .brand-logo-container {
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            background: var(--bg-smoke-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .brand-logo-img {
+            display: block;
+            width: 82%;
+            height: 82%;
+            object-fit: contain;
+            border-radius: 50%;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: relative;
+            z-index: 3;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .logo-wrapper:hover .brand-logo-img {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        .badge-verified {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: var(--gold-gradient);
+            color: #000;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 900;
+            border: 2px solid var(--bg-dark);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+            z-index: 4;
+        }
+
+        .brand-title {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -1.2px;
+            margin-bottom: 14px;
+            background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.75) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.72rem;
+            font-weight: 900;
+            color: var(--gold-primary);
+            padding: 6px 0;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-bottom: 24px;
+            text-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .bio-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.75;
+            font-weight: 700;
+        }
+
+        /* Categories Section */
+        .category-section {
+            margin-bottom: 44px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding: 0 4px;
+        }
+
+        .category-title {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+        }
+
+        .category-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+        }
+
+        /* Cards List */
+        .drive-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .drive-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 20px 24px;
+            border-radius: 22px;
+            text-decoration: none;
+            color: var(--text-primary);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .drive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .drive-card:hover::before {
+            left: 100%;
+        }
+
+        .drive-card:hover {
+            background: var(--card-bg-hover);
+            border-color: rgba(197, 160, 40, 0.35);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 20px 40px -15px rgba(0, 0, 0, 0.9),
+                0 0 25px rgba(197, 160, 40, 0.08);
+        }
+
+        .drive-card:active {
+            transform: scale(0.98);
+        }
+
+        .drive-info {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .drive-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            transition: all 0.35s ease;
+        }
+
+        .drive-card:hover .drive-icon {
+            border-color: rgba(197, 160, 40, 0.4);
+            background: rgba(197, 160, 40, 0.1);
+            transform: scale(1.05);
+        }
+
+        .drive-icon-text {
+            font-family: 'Georgia', serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--gold-primary);
+            letter-spacing: -1px;
+        }
+
+        .drive-icon-telegram {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .drive-icon-telegram svg {
+            display: block;
+        }
+
+        .drive-text h3 {
+            font-size: 1.02rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .pdf-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--gold-primary);
+            background: transparent;
+            border: 1px solid rgba(197, 160, 40, 0.45);
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-left: 8px;
+            vertical-align: middle;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-badge svg {
+            width: 11px;
+            height: 11px;
+            fill: var(--gold-primary);
+        }
+
+        .drive-card:hover .pdf-badge {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 12px var(--gold-glow);
+            color: #FFFFFF;
+        }
+
+        .drive-card:hover .pdf-badge svg {
+            fill: #FFFFFF;
+        }
+
+        .drive-text p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .action-arrow {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.35s ease;
+            flex-shrink: 0;
+        }
+
+        .action-arrow svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            transition: transform 0.35s ease;
+        }
+
+        .drive-card:hover .action-arrow {
+            background: transparent;
+            color: var(--gold-primary);
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 18px var(--gold-glow);
+        }
+
+        .drive-card:hover .action-arrow svg {
+            transform: translateX(2px);
+        }
+
+        /* YENİ Rozeti */
+        .new-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            background: linear-gradient(135deg, rgba(179, 7, 16, 0.95) 0%, rgba(89, 3, 6, 0.95) 100%);
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 12px rgba(179, 7, 16, 0.35);
+            vertical-align: middle;
+        }
+
+        /* Sarı (Marka Sarısı) "Çok Yakında" Rozeti */
+        .gold-soon-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: #000000;
+            background: var(--gold-gradient);
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 12px var(--gold-glow);
+            vertical-align: middle;
+        }
+
+        /* Devre Dışı / Çok Yakında Kartları */
+        .drive-card.is-disabled {
+            cursor: default;
+            opacity: 0.55;
+        }
+
+        .drive-card.is-disabled:hover {
+            transform: none;
+            background: var(--card-bg);
+            border-color: var(--card-border);
+            box-shadow: none;
+        }
+
+        .drive-card.is-disabled .action-arrow {
+            opacity: 0;
+        }
+
+        /* Genişleyen Çizgi Roman Menüsü */
+        .drive-card.expandable {
+            cursor: pointer;
+        }
+
+        .drive-card.expandable .action-arrow svg {
+            transition: transform 0.35s ease;
+        }
+
+        .drive-card.expandable.is-open .action-arrow svg {
+            transform: rotate(90deg);
+        }
+
+        .comic-submenu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 12px;
+            padding-left: 16px;
+            border-left: 2px solid rgba(197, 160, 40, 0.25);
+        }
+
+        .comic-submenu.is-open {
+            display: flex;
+        }
+
+        .drive-subcard {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid var(--card-border);
+            padding: 14px 18px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .drive-subcard:not(.is-disabled):hover {
+            background: var(--card-bg-hover);
+            border-color: rgba(197, 160, 40, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .drive-subcard.is-disabled {
+            cursor: default;
+            opacity: 0.5;
+        }
+
+        .drive-subcard h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* E-Kitap Kartı */
+        .paid-card-wrapper {
+            position: relative;
+            border-radius: 28px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(179, 7, 16, 0.5), rgba(197, 160, 40, 0.25), rgba(179, 7, 16, 0.1));
+            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.95), 0 0 30px rgba(179, 7, 16, 0.12);
+        }
+
+        .paid-card {
+            background: linear-gradient(165deg, rgba(22, 10, 14, 0.95) 0%, rgba(10, 12, 16, 0.98) 100%);
+            border-radius: 27px;
+            padding: 32px;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .paid-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .paid-card-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .soon-badge {
+            background: linear-gradient(135deg, rgba(179, 7, 16, 0.85) 0%, rgba(89, 3, 6, 0.95) 100%);
+            color: #FFFFFF;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 6px 16px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(179, 7, 16, 0.3);
+        }
+
+        .paid-card p {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .paid-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .book-type {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-text {
+            font-size: 0.82rem;
+            color: var(--gold-light);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--gold-primary);
+            animation: pulse 2.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(0.85); }
+            50% { opacity: 1; transform: scale(1.15); }
+            100% { opacity: 0.3; transform: scale(0.85); }
+        }
+
+        /* Sosyal Medya İkon Alanı */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin: 4px 0 36px;
+        }
+
+        .social-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.35s ease;
+        }
+
+        .social-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .social-icon:hover {
+            color: var(--gold-primary);
+            border-color: rgba(197, 160, 40, 0.4);
+            background: rgba(197, 160, 40, 0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px var(--gold-glow);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 12px 0 60px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            letter-spacing: 0.8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mesh-bg"></div>
+
+    <!-- Header / Funnel Üst Alanı Arka Plan Görseli -->
+    <div class="hero-bg-wrapper">
+        <img class="hero-bg-image" src="/biblioteca/images/headpaperimg.jpg" alt="Arka Plan Görseli">
+    </div>
+
+    <div class="container">
+
+        <!-- Bio / Profile -->
+        <section class="profile-section animate-fade-in delay-1">
+            <div class="logo-wrapper">
+                <div class="story-ring"></div>
+                <div class="brand-logo-container">
+                    <img class="brand-logo-img" src="/biblioteca/images/logoimg.jpg" alt="İspanyolca Cebimizde Logo">
+                </div>
+                <div class="badge-verified">✓</div>
+            </div>
+            <h1 class="brand-title">İspanyolca Cebimizde</h1>
+            
+            <div class="brand-tagline">
+                HIZLI &bull; BASİT &bull; EĞLENCELİ &bull; HAP BİLGİ
+            </div>
+
+            <p class="bio-text">
+                Uzun dersleri ve sıkıcı gramer teorilerini unutun. Her an cebinizde taşıyabileceğiniz pratik, akılda kalıcı ve eğlenceli kaynaklar sunmak için buradayız.
+            </p>
+        </section>
+
+        <!-- Sosyal Medya İkon Alanı -->
+        <div class="social-links animate-fade-in delay-1">
+            <a href="https://instagram.com/ispanyolca.cebimizde" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://spotify.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Spotify">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.48.66.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141 C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.18-1.38-.72-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            </a>
+            <a href="https://music.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube Music">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104A7.104 7.104 0 1 1 12 4.896a7.104 7.104 0 0 1 0 14.208zM12 6.984A5.015 5.015 0 0 0 6.984 12 5.015 5.015 0 0 0 12 17.016 5.015 5.015 0 0 0 17.016 12 5.015 5.015 0 0 0 12 6.984zM9.6 15.6V8.4l6 3.6-6 3.6z"/></svg>
+            </a>
+            <a href="mailto:ispanyolcacebimizde@gmail.com" class="social-icon" aria-label="E-Posta">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
+        </div>
+
+        <!-- KATEGORİ 1: ÜCRETSİZ İÇERİKLER -->
+        <section class="category-section animate-fade-in delay-2">
+            <div class="category-header">
+                <span class="category-title">Ücretsiz Kaynaklar</span>
+                <div class="category-line"></div>
+            </div>
+
+            <div class="drive-list">
+                <!-- Card 1 -->
+                <div class="drive-card expandable" id="comicToggle" onclick="toggleSubmenu('comicToggle','comicSubmenu')">
+                    <div class="drive-info">
+                        <div class="drive-icon">🎨</div>
+                        <div class="drive-text">
+                            <h3>
+                                Haftalık Çizgi Roman
+                                <span class="pdf-badge">
+                                    <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    PDF
+                                </span>
+                            </h3>
+                            <p>Eğlenceli görsellerle pratik İspanyolca okuması</p>
+                        </div>
+                    </div>
+                    <div class="action-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
+
+                <div class="comic-submenu" id="comicSubmenu">
+                    <a href="https://drive.google.com/uc?export=download&id=1okOuMpGbT6x1EA8Dj2rqU0dNUfDeuvB2" target="_blank" rel="noopener noreferrer" class="drive-subcard">
+                        <h4>Batman Ve Joker Madridde! <span class="new-badge">YENİ</span></h4>
+                    </a>
+                    <div class="drive-subcard is-disabled">
+                        <h4>Çok Yakında...</h4>
+                    </div>
+                    <div class="drive-subcard is-disabled">
+                        <h4>Çok Yakında...</h4>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="drive-card expandable" id="bulletinToggle" onclick="toggleSubmenu('bulletinToggle','bulletinSubmenu')">
+                    <div class="drive-info">
+                        <div class="drive-icon">📬</div>
+                        <div class="drive-text">
+                            <h3>
+                                Aylık İspanyolca Dergisi - Z
+                                <span class="pdf-badge">
+                                    <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    PDF
+                                </span>
+                            </h3>
+                            <p>Kültür, ipuçları ve pratik kalıplarla dolu özel bülten</p>
+                        </div>
+                    </div>
+                    <div class="action-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
+
+                <div class="comic-submenu" id="bulletinSubmenu">
+                    <a href="https://drive.usercontent.google.com/download?id=1e_MmlLNtA_WqDUB_1dkJ8QV6yQDrIXLf&export=download&confirm=t" target="_blank" rel="noopener noreferrer" class="drive-subcard">
+                        <h4>Z Raporu - 01 <span class="new-badge">YENİ</span></h4>
+                    </a>
+                    <div class="drive-subcard is-disabled">
+                        <h4>Çok Yakında...</h4>
+                    </div>
+                    <div class="drive-subcard is-disabled">
+                        <h4>Çok Yakında...</h4>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <a href="#" target="_blank" rel="noopener noreferrer" class="drive-card">
+                    <div class="drive-info">
+                        <div class="drive-icon">🎴</div>
+                        <div class="drive-text">
+                            <h3>
+                                İspanyolca 20 Kelime Kartı
+                                <span class="pdf-badge">
+                                    <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                    PDF
+                                </span>
+                            </h3>
+                            <p>Günlük hayatta anında kullanabileceğin kelime kartları</p>
+                        </div>
+                    </div>
+                    <div class="action-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </a>
+
+                <!-- Card 4 -->
+                <div class="drive-card is-disabled">
+                    <div class="drive-info">
+                        <div class="drive-icon drive-icon-text">Aa</div>
+                        <div class="drive-text">
+                            <h3>
+                                Haftanın Cümlesi
+                                <span class="gold-soon-badge">Çok Yakında...</span>
+                            </h3>
+                            <p>Her hafta akılda kalan yeni bir İspanyolca cümle</p>
+                        </div>
+                    </div>
+                    <div class="action-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="drive-card is-disabled">
+                    <div class="drive-info">
+                        <div class="drive-icon drive-icon-telegram">
+                            <svg viewBox="0 0 24 24" width="26" height="26"><path fill="#29A9EA" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0z"/><path fill="#FFFFFF" d="M17.94 7.06l-2.02 9.53c-.15.68-.55.85-1.11.53l-3.07-2.26-1.48 1.43c-.16.16-.3.3-.62.3l.22-3.15 5.73-5.18c.25-.22-.05-.35-.39-.13l-7.08 4.46-3.05-.95c-.66-.21-.68-.66.14-.98l11.92-4.6c.55-.2 1.04.13.86.98z"/></svg>
+                        </div>
+                        <div class="drive-text">
+                            <h3>
+                                Ücretsiz Telegram Kanalı
+                                <span class="gold-soon-badge">Çok Yakında...</span>
+                            </h3>
+                            <p>Topluluğa katıl, güncellemeleri kaçırma</p>
+                        </div>
+                    </div>
+                    <div class="action-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KATEGORİ 2: ÜCRETLİ İÇERİKLER -->
+        <section class="category-section animate-fade-in delay-3">
+            <div class="category-header">
+                <span class="category-title">Özel Koleksiyon</span>
+                <div class="category-line"></div>
+            </div>
+
+            <div class="paid-card-wrapper">
+                <div class="paid-card">
+                    <div class="paid-card-header">
+                        <h3 class="paid-card-title">İspanyolcanın Özeti</h3>
+                        <span class="soon-badge">Çok Yakında</span>
+                    </div>
+                    <p>
+                        A1-A2 seviyesindeki tüm temel yapılar ve dil bilgisi incelikleri tek bir dijital rehberde toplandı. Sadece günlük sohbetlerde gerçekten işinize yarayacak en saf özü barındırır.
+                    </p>
+                    <div class="paid-card-footer">
+                        <span class="book-type">📘 Dijital E-Kitap (PDF)</span>
+                        <span class="status-text">
+                            <span class="status-dot"></span>
+                            Hazırlanıyor...
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 İspanyolca Cebimizde. Tüm hakları saklıdır.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function toggleSubmenu(toggleId, submenuId) {
+            document.getElementById(toggleId).classList.toggle('is-open');
+            document.getElementById(submenuId).classList.toggle('is-open');
+        }
+    </script>
+
+</body>
+</html>
